@@ -65,4 +65,8 @@
 #include "sama5d3_linea.h"
 #endif
 
+#ifdef CONFIG_EC100
+#include "ec100.h"
+#endif
+
 #endif

@@ -1,0 +1,2 @@
+config CONFIG_BOARDNAME
+	default "ec100"	if CONFIG_EC100
