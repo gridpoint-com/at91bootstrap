@@ -29,6 +29,7 @@
 #include "board.h"
 #include "arch/at91_sdramc.h"
 #include "sdramc.h"
+#include "timer.h"
 
 static inline void sdramc_writel(unsigned int reg, const unsigned int value)
 {
@@ -54,7 +55,7 @@ int sdramc_initialize(struct sdramc_register *sdramc_config,
 	sdramc_writel(SDRAMC_MDR, sdramc_config->mdr);
 
 	/* Step#4 The minimum pause of 200 us is provided to precede any single toggle */
-	for (i = 0; i < 1000; i++) ;
+	udelay(200);
 
 	/* Step#5 A NOP command is issued to the SDRAM devices */
 	sdramc_writel(SDRAMC_MR, AT91C_SDRAMC_MODE_NOP);
@@ -64,7 +65,7 @@ int sdramc_initialize(struct sdramc_register *sdramc_config,
 	sdramc_writel(SDRAMC_MR, AT91C_SDRAMC_MODE_PRECHARGE);
 	writel(0x00000000, sdram_address);
 
-	for (i = 0; i < 10000; i++) ;
+	udelay(2000);
 
 	/* Step#7 Eight auto-refresh cycles are provided */
 	for (i = 0; i < 8; i++) {
@@ -72,7 +73,7 @@ int sdramc_initialize(struct sdramc_register *sdramc_config,
 		writel(0x00000001 + i, sdram_address + 4 + 4 * i);
 	}
 
-	/* Step#8 A Mode Register set (MRS) cyscle is issued to program the SDRAM parameters(TCSR, PASR, DS) */
+	/* Step#8 A Mode Register set (MRS) cycle is issued to program the SDRAM parameters(TCSR, PASR, DS) */
 	sdramc_writel(SDRAMC_MR, AT91C_SDRAMC_MODE_LOAD_MODE);
 	writel(0xcafedede, sdram_address + 0x24);
 
