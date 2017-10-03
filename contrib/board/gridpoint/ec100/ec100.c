@@ -27,6 +27,7 @@
  */
 #include "common.h"
 #include "hardware.h"
+#include "board.h"
 #include "arch/at91_ccfg.h"
 #include "arch/at91_matrix.h"
 #include "arch/at91_rstc.h"
@@ -126,6 +127,11 @@ static void sdramc_init(void)
 		AT91C_BASE_CCFG + CCFG_EBICSA);
 
 	sdramc_initialize(&sdramc_config, AT91C_BASE_CS1);
+
+	dbg_info("\n");
+	dbg_info("  Main Clock: %d Hz\n", MAINCK);
+	dbg_info("Master Clock: %d Hz\n", MASTER_CLOCK);
+	dbg_info("   CPU Clock: %d Hz\n", CPU_CLOCK);
 }
 #endif /* #ifdef CONFIG_SDRAM */
 
