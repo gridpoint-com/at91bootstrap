@@ -69,4 +69,8 @@
 #include "ec100.h"
 #endif
 
+#ifdef CONFIG_EC2000
+#include "ec2000.h"
+#endif
+
 #endif

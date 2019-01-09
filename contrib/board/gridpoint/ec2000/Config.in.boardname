@@ -1,0 +1,2 @@
+config CONFIG_BOARDNAME
+	default "ec2000"	if CONFIG_EC2000

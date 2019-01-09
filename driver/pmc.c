@@ -627,8 +627,10 @@ unsigned int sys_mask_to_per_id(unsigned int sys_mask)
 	switch (sys_mask) {
 	case AT91C_PMC_LCDCK:
 		return AT91C_ID_LCDC;
+#if defined(SAMA5D4)
 	case AT91C_PMC_SMDCK:
 		return AT91C_ID_SMD;
+#endif
 	case AT91C_PMC_UHP:
 		return AT91C_ID_UHPHS;
 	case AT91C_PMC_UDP:
