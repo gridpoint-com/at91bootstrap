@@ -24,7 +24,7 @@ endif
 BINDIR:=$(TOPDIR)/binaries
 
 DATE := $(shell date)
-VERSION := 3.8.11
+VERSION := 3.8.12
 REVISION := gp1
 SCMINFO := $(shell ($(TOPDIR)/host-utilities/setlocalversion $(TOPDIR)))
 
@@ -193,6 +193,10 @@ ifeq ($(CONFIG_LOAD_4MB), y)
 TARGET_NAME:=$(basename $(IMAGE_NAME))
 endif
 
+ifeq ($(CONFIG_LOAD_NONE), y)
+TARGET_NAME:=$(basename $(IMAGE_NAME))
+endif
+
 BOOT_NAME=$(BOARDNAME)-$(PROJECT)$(CARD_SUFFIX)boot-$(TARGET_NAME)$(BLOB)-$(VERSION)$(REV)
 AT91BOOTSTRAP:=$(BINDIR)/$(BOOT_NAME).bin
 
@@ -233,7 +237,7 @@ NOSTDINC_FLAGS=-nostdinc -isystem $(shell $(CC) -print-file-name=include)
 
 CPPFLAGS=$(NOSTDINC_FLAGS) -ffunction-sections -g -Os -Wall \
 	-mno-unaligned-access \
-	-fno-stack-protector -fno-common -fno-builtin -fno-jump-tables \
+	-fno-stack-protector -fno-common -fno-builtin -fno-jump-tables -fno-pie \
 	-I$(INCL) -Icontrib/include -Iinclude -Ifs/include \
 	-I$(TOPDIR)/config/at91bootstrap-config \
 	-DAT91BOOTSTRAP_VERSION=\"$(VERSION)$(REV)$(SCMINFO)\" -DCOMPILE_TIME="\"$(DATE)\""
@@ -408,7 +412,7 @@ distrib: mrproper
 
 config-clean:
 	@echo "  CLEAN        "configuration files!
-	$(Q)make -C config distclean
+	$(Q)$(MAKE) -C config distclean
 	$(Q)rm -fr config/at91bootstrap-config
 	$(Q)rm -f  config/.depend
 
