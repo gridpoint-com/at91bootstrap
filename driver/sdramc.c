@@ -49,6 +49,11 @@ int sdramc_initialize(struct sdramc_register *sdramc_config,
 	/* Step#1 SDRAM feature must be in the configuration register */
 	sdramc_writel(SDRAMC_CR, sdramc_config->cr);
 
+	/* Step#1 bis (SAM9X60 SDRAMC ) - initialize CFR1 register */
+
+	if (sdramc_config->cfr1) /* avoid write for products where cfr1 is unavailable */
+		sdramc_writel(SDRAMC_CFR1, sdramc_config->cfr1);
+
 	/* Step#2 For mobile SDRAM, temperature-compensated self refresh(TCSR),... */
 
 	/* Step#3 The SDRAM memory type must be set in the Memory Device Register */
