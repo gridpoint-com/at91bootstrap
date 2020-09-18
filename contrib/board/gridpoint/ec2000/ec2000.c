@@ -40,7 +40,7 @@
 #include "watchdog.h"
 #include "arch/at91_ddrsdrc.h"
 #include "arch/at91_pio.h"
-#include "arch/at91_pmc.h"
+#include "arch/at91_pmc/pmc.h"
 #include "arch/at91_rstc.h"
 #include "arch/at91_sfr.h"
 #include "arch/tz_matrix.h"
@@ -55,7 +55,7 @@ static void at91_dbgu_hw_init(void)
 	};
 
 	pio_configure(dbgu_pins);
-	pmc_sam9x5_enable_periph_clk(CONFIG_SYS_DBGU_ID);
+	pmc_enable_periph_clock(CONFIG_SYS_DBGU_ID);
 }
 
 static void initialize_dbgu(void)
@@ -378,7 +378,7 @@ void hw_init(void)
                 {(char *)0, 0, 0, PIO_DEFAULT, PIO_PERIPH_F},
         };
         pio_configure(nand_pins);
-        pmc_sam9x5_enable_periph_clk(AT91C_ID_HSMC);
+        pmc_enable_periph_clock(AT91C_ID_HSMC);
 
         /* EBI Configuration Register */
         writel((AT91C_EBICFG_DRIVE0_HIGH |
@@ -494,7 +494,7 @@ void at91_qspi_hw_init(void)
 #endif
 
 	pio_configure(qspi_pins);
-	pmc_sam9x5_enable_periph_clk(CONFIG_SYS_ID_QSPI);
+	pmc_enable_periph_clock(CONFIG_SYS_ID_QSPI);
 }
 #endif
 
@@ -545,7 +545,7 @@ void at91_sdhc_hw_init(void)
 
 	pio_configure(sdmmc_pins);
 
-	pmc_sam9x5_enable_periph_clk(CONFIG_SYS_ID_SDHC);
+	pmc_enable_periph_clock(CONFIG_SYS_ID_SDHC);
 	pmc_enable_periph_generated_clk(CONFIG_SYS_ID_SDHC,
 					GCK_CSS_UPLL_CLK,
 					ATMEL_SDHC_GCKDIV_VALUE);
