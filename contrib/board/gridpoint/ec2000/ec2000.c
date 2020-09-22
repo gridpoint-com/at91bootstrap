@@ -412,6 +412,13 @@ void hw_init(void)
            AT91C_SMC_MODE_WRITEMODE_NWE_CTRL |
            AT91C_SMC_MODE_DBW_8 |
            AT91C_SMC_MODE_TDF_CYCLES(1), (ATMEL_BASE_SMC + SMC_MODE3));
+
+	pmc_disable_periph_clock(AT91C_ID_UDPHS);
+	pmc_enable_periph_clock(AT91C_ID_UHPHS);
+
+	unsigned int udphs_ctrl = readl(AT91C_BASE_UDPHS);
+	udphs_ctrl &= ~(1UL << 8);
+	writel(udphs_ctrl, AT91C_BASE_UDPHS);
 }
 #endif
 
