@@ -32,6 +32,7 @@
 
 int slowclk_enable_osc32(void)
 {
+	at91_blue_led(1);
 #if !defined(SAMA5D4) && !defined(SAMA5D2)
 	unsigned int reg;
 
@@ -46,6 +47,7 @@ int slowclk_enable_osc32(void)
 	/* start a internal timer */
 	start_interval_timer();
 
+	at91_blue_led(0);
 	return 0;
 }
 
@@ -104,6 +106,8 @@ static int slowclk_select_osc32(void)
 
 int slowclk_switch_osc32(void)
 {
+	at91_blue_led(1);
+
 	slowclk_wait_osc32_stable();
 
 	slowclk_select_osc32();
@@ -112,6 +116,7 @@ int slowclk_switch_osc32(void)
 	slowclk_disable_rc32();
 #endif
 
+	at91_blue_led(0);
 	return 0;
 }
 

@@ -51,6 +51,10 @@ int main(void)
 #endif
 	int ret = 0;
 
+	at91_blue_led(0);
+	at91_blue_led(1);
+	at91_blue_led(0);
+
 #ifdef CONFIG_HW_INIT
 	hw_init();
 #endif

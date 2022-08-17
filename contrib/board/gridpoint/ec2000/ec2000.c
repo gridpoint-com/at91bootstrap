@@ -320,17 +320,17 @@ void at91_init_can_message_ram(void)
 	       (AT91C_BASE_SFR + SFR_CAN));
 }
 
-static void at91_red_led_on(void)
+void at91_blue_led(int value)
 {
-	pio_set_gpio_output(AT91C_PIN_PA(27), 0);
+	pio_set_gpio_output(AT91C_PIN_PA(31), value);
 }
 
 #ifdef CONFIG_HW_INIT
 void hw_init(void)
 {
-	at91_disable_wdt();
+	at91_blue_led(1);
 
-	at91_red_led_on();
+	at91_disable_wdt();
 
 	pmc_cfg_plla(PLLA_SETTINGS);
 
@@ -419,6 +419,8 @@ void hw_init(void)
 	unsigned int udphs_ctrl = readl(AT91C_BASE_UDPHS);
 	udphs_ctrl &= ~(1UL << 8);
 	writel(udphs_ctrl, AT91C_BASE_UDPHS);
+
+	at91_blue_led(0);
 }
 #endif
 

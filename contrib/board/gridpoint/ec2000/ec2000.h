@@ -116,4 +116,6 @@
 
 #define NO_GALOIS_TABLE_IN_ROM
 
+void at91_blue_led(int value);
+
 #endif
