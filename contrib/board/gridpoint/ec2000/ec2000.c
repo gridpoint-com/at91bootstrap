@@ -329,32 +329,50 @@ void at91_blue_led(int value)
 void hw_init(void)
 {
 	at91_blue_led(1);
-
 	at91_disable_wdt();
+	at91_blue_led(0);
 
+	at91_blue_led(1);
 	pmc_cfg_plla(PLLA_SETTINGS);
+	at91_blue_led(0);
 
 	/* Initialize PLLA charge pump */
 	/* No need: we keep what is set in ROM code */
 	//pmc_init_pll(0x3);
+	at91_blue_led(1);
 	pmc_cfg_mck(BOARD_PRESCALER_PLLA);
+	at91_blue_led(0);
 
+	at91_blue_led(1);
 	writel(AT91C_RSTC_KEY_UNLOCK | AT91C_RSTC_URSTEN,
 	       AT91C_BASE_RSTC + RSTC_RMR);
+	at91_blue_led(0);
 
 #ifdef CONFIG_MATRIX
+	at91_blue_led(1);
 	matrix_init();
+	at91_blue_led(0);
 #endif
+	at91_blue_led(1);
 	initialize_dbgu();
+	at91_blue_led(0);
 
+	at91_blue_led(1);
 	timer_init();
+	at91_blue_led(0);
 
 #ifdef CONFIG_DDR2
+	at91_blue_led(1);
 	ddr2_init();
+	at91_blue_led(0);
 #endif
+	at91_blue_led(1);
 	l2cache_prepare();
+	at91_blue_led(0);
 
+	at91_blue_led(1);
 	at91_init_can_message_ram();
+	at91_blue_led(0);
 
 	/* toggle reset line of Ethernet PHY */
 	pio_set_gpio_output(AT91C_PIN_PA(10), 0);
@@ -377,29 +395,43 @@ void hw_init(void)
             {"D7", AT91C_PIN_PA(7), 0, PIO_DRVSTR_ME, PIO_PERIPH_F},
             {(char *)0, 0, 0, PIO_DEFAULT, PIO_PERIPH_F},
     };
+	at91_blue_led(1);
     pio_configure(nand_pins);
+	at91_blue_led(0);
+
+	at91_blue_led(1);
     pmc_enable_periph_clock(AT91C_ID_HSMC);
+	at91_blue_led(0);
 
     /* EBI Configuration Register */
+	at91_blue_led(1);
     writel((AT91C_EBICFG_DRIVE0_HIGH |
             AT91C_EBICFG_PULL0_NONE |
             AT91C_EBICFG_DRIVE1_HIGH |
             AT91C_EBICFG_PULL1_NONE), SFR_EBICFG + AT91C_BASE_SFR);
+	at91_blue_led(0);
 
     /* Configure SMC CS3 for NAND/SmartMedia */
+	at91_blue_led(1);
     writel(AT91C_SMC_SETUP_NWE(1) |
            AT91C_SMC_SETUP_NCS_WR(1) |
            AT91C_SMC_SETUP_NRD(1) |
            AT91C_SMC_SETUP_NCS_RD(1), (ATMEL_BASE_SMC + SMC_SETUP3));
+	at91_blue_led(0);
 
+	at91_blue_led(1);
     writel(AT91C_SMC_PULSE_NWE(2) |
            AT91C_SMC_PULSE_NCS_WR(3) |
            AT91C_SMC_PULSE_NRD(2) |
            AT91C_SMC_PULSE_NCS_RD(3), (ATMEL_BASE_SMC + SMC_PULSE3));
+	at91_blue_led(0);
 
+	at91_blue_led(1);
     writel(AT91C_SMC_CYCLE_NWE(5) |
            AT91C_SMC_CYCLE_NRD(5), (ATMEL_BASE_SMC + SMC_CYCLE3));
+	at91_blue_led(0);
 
+	at91_blue_led(1);
     writel(AT91C_SMC_TIMINGS_TCLR(2) |
            AT91C_SMC_TIMINGS_TADL(7) |
            AT91C_SMC_TIMINGS_TAR(2) |
@@ -407,19 +439,30 @@ void hw_init(void)
            AT91C_SMC_TIMINGS_TWB(7) |
            AT91C_SMC_TIMINGS_RBNSEL(2) |
            AT91C_SMC_TIMINGS_NFSEL, (ATMEL_BASE_SMC + SMC_TIMINGS3));
+	at91_blue_led(0);
 
+	at91_blue_led(1);
     writel(AT91C_SMC_MODE_READMODE_NRD_CTRL |
            AT91C_SMC_MODE_WRITEMODE_NWE_CTRL |
            AT91C_SMC_MODE_DBW_8 |
            AT91C_SMC_MODE_TDF_CYCLES(1), (ATMEL_BASE_SMC + SMC_MODE3));
+	at91_blue_led(0);
 
+	at91_blue_led(1);
 	pmc_disable_periph_clock(AT91C_ID_UDPHS);
-	pmc_enable_periph_clock(AT91C_ID_UHPHS);
+	at91_blue_led(0);
 
+	at91_blue_led(1);
+	pmc_enable_periph_clock(AT91C_ID_UHPHS);
+	at91_blue_led(0);
+
+	at91_blue_led(1);
 	unsigned int udphs_ctrl = readl(AT91C_BASE_UDPHS);
+	at91_blue_led(0);
+
+	at91_blue_led(1);
 	udphs_ctrl &= ~(1UL << 8);
 	writel(udphs_ctrl, AT91C_BASE_UDPHS);
-
 	at91_blue_led(0);
 }
 #endif
