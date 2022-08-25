@@ -206,8 +206,15 @@ int pmc_cfg_mck(unsigned int pmc_mckr)
 	tmp |= (pmc_mckr & AT91C_PMC_CSS);
 	write_pmc(PMC_MCKR, tmp);
 
+	at91_blue_led(0);
+	at91_blue_led(1);
+	at91_blue_led(0);
+
 	while (!(read_pmc(PMC_SR) & AT91C_PMC_MCKRDY))
-		;
+	{
+		at91_blue_led(1);
+		at91_blue_led(0);
+	}
 
 	return 0;
 }
