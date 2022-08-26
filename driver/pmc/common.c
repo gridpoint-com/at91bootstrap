@@ -161,6 +161,8 @@ int pmc_cfg_mck(unsigned int pmc_mckr)
 	/*
 	 * Program the PRES field in the PMC_MCKR register
 	 */
+	at91_blue_led(0);
+	at91_blue_led(1);
 	tmp = read_pmc(PMC_MCKR);
 	tmp &= (~(0x1 << 13));
 #if defined(AT91SAM9X5) || defined(AT91SAM9N12) || defined(SAMA5D3X) \
@@ -172,49 +174,57 @@ int pmc_cfg_mck(unsigned int pmc_mckr)
 	tmp |= (pmc_mckr & AT91C_PMC_PRES);
 #endif
 	write_pmc(PMC_MCKR, tmp);
+	while (!(read_pmc(PMC_SR) & AT91C_PMC_MCKRDY))
+		;
 
 	/*
 	 * Program the MDIV field in the PMC_MCKR register
 	 */
+	at91_blue_led(0);
+	at91_blue_led(1);
 	tmp = read_pmc(PMC_MCKR);
 	tmp &= (~AT91C_PMC_MDIV);
 	tmp |= (pmc_mckr & AT91C_PMC_MDIV);
 	write_pmc(PMC_MCKR, tmp);
+	while (!(read_pmc(PMC_SR) & AT91C_PMC_MCKRDY))
+		;
 
 	/*
 	 * Program the PLLADIV2 field in the PMC_MCKR register
 	 */
+	at91_blue_led(0);
+	at91_blue_led(1);
 	tmp = read_pmc(PMC_MCKR);
 	tmp &= (~AT91C_PMC_PLLADIV2);
 	tmp |= (pmc_mckr & AT91C_PMC_PLLADIV2);
 	write_pmc(PMC_MCKR, tmp);
+	while (!(read_pmc(PMC_SR) & AT91C_PMC_MCKRDY))
+		;
 
 	/*
 	 * Program the H32MXDIV field in the PMC_MCKR register
 	 */
+	at91_blue_led(0);
+	at91_blue_led(1);
 	tmp = read_pmc(PMC_MCKR);
 	tmp &= (~AT91C_PMC_H32MXDIV);
 	tmp |= (pmc_mckr & AT91C_PMC_H32MXDIV);
 	write_pmc(PMC_MCKR, tmp);
+	while (!(read_pmc(PMC_SR) & AT91C_PMC_MCKRDY))
+		;
 
 	/*
 	 * Program the CSS field in the PMC_MCKR register,
 	 * wait for MCKRDY bit to be set in the PMC_SR register
 	 */
+	at91_blue_led(0);
+	at91_blue_led(1);
 	tmp = read_pmc(PMC_MCKR);
 	tmp &= (~AT91C_PMC_CSS);
 	tmp |= (pmc_mckr & AT91C_PMC_CSS);
 	write_pmc(PMC_MCKR, tmp);
-
-	at91_blue_led(0);
-	at91_blue_led(1);
-	at91_blue_led(0);
-
 	while (!(read_pmc(PMC_SR) & AT91C_PMC_MCKRDY))
-	{
-		at91_blue_led(1);
-		at91_blue_led(0);
-	}
+		;
 
 	return 0;
 }
