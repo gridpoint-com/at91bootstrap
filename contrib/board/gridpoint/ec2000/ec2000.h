@@ -33,8 +33,8 @@
  */
 #define BOARD_MAINOSC		24000000
 
-/* PCK: 492MHz, MCK: 164MHz */
-#define BOARD_PLLA_MULA		40
+/* PCK: 372MHz, MCK: 124MHz */
+#define BOARD_PLLA_MULA		30
 
 #define BOARD_PCK		((unsigned long)((BOARD_MAINOSC * (BOARD_PLLA_MULA + 1)) / 2))
 #define BOARD_MCK		((unsigned long)((BOARD_MAINOSC * (BOARD_PLLA_MULA + 1)) / 2 / 3))
@@ -53,7 +53,7 @@
 					| AT91C_PMC_MDIV_3 \
 					| AT91C_PMC_CSS_PLLA_CLK)
 
-#define MASTER_CLOCK		164000000
+#define MASTER_CLOCK		124000000
 
 #define PLLA_SETTINGS		(BOARD_CKGR_PLLA | \
 				BOARD_PLLACOUNT | \
